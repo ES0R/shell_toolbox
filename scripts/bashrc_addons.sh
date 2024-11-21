@@ -4,7 +4,7 @@ parse_git_branch() {
 }
 
 # Colored prompt with git branch
-PS1='\[\e[38;5;32m\]\u\[\e[0m\] \[\e[38;5;161m\]\w\[\e[38;5;126m\]$(parse_git_branch)\[\e[0m\] \$ '
+PS1='\[\e[38;5;32m\]\u\[\e[0m\] \[\e[38;5;161m\]\w \[\e[38;5;126m\]$(parse_git_branch)\[\e[0m\] \$ '
 
 # Aliases
 alias ls='lsd'
