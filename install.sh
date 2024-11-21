@@ -1,21 +1,14 @@
 #!/bin/bash
+SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
 
-# Update and Install Packages
-bash ./packages/package_install.sh
+# Install required packages
+#bash "${SCRIPT_PATH}/config/package_install.sh"
 
-# Append customizations to .bashrc
-BASHRC_PATH="$HOME/.bashrc"
-ADDONS_FILE=".bashrc_addons"
+# Add customizations to .bashrc
+echo "Adding shell_toolbox customizations to .bashrc"
+echo -e "\n# shell_toolbox customizations" >> ~/.bashrc
+cat "${SCRIPT_PATH}/scripts/.bashrc_addons.sh" >> ~/.bashrc
+source ~/.bashrc
 
-if [ -f "$ADDONS_FILE" ]; then
-    echo "# Adding custom shell settings from shell_custom_toolbox" >> "$BASHRC_PATH"
-    cat "$ADDONS_FILE" >> "$BASHRC_PATH"
-    echo "Custom shell settings added to .bashrc"
-else
-    echo "Addons file not found. Skipping .bashrc customization."
-fi
 
-# Reload .bashrc to apply changes
-source "$BASHRC_PATH"
-
-echo "Shell customization complete."
+echo "Shell customization complete"
