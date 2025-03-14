@@ -1,14 +1,14 @@
-#!/bin/bash
-SCRIPT_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
+#!/usr/bin/env bash
 
-# Install required packages
-#bash "${SCRIPT_PATH}/config/package_install.sh"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONFIG_FILE="${SCRIPT_DIR}/config.env"
 
-# Add customizations to .bashrc
-echo "Adding shell_toolbox customizations to .bashrc"
-echo -e "\n# shell_toolbox customizations" >> ~/.bashrc
-cat "${SCRIPT_PATH}/scripts/bashrc_addons.sh" >> ~/.bashrc
-source ~/.bashrc
+cat > "$CONFIG_FILE" << EOF
+ENABLE_PROMPT=false
+ENABLE_OHMYPOSH=false
+EOF
 
+grep -qxF "source ${SCRIPT_DIR}/toolbox.sh" ~/.bashrc || \
+  echo "source ${SCRIPT_DIR}/toolbox.sh" >> ~/.bashrc
 
-echo "Shell customization complete"
+echo "Installation complete."

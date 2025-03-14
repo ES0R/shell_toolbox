@@ -1,12 +1,29 @@
-# shell_toolbox
-Customization of shell - visualization and commands
+# Shell Toolbox
 
-## Oh-my-Posh
+A simple, modular, and highly configurable toolbox. Designed to be easily integrated in containers
 
-## Alias
+## Structure
 
-## Terminal line
+```bash
+shell_toolbox/
+├── install.sh          
+├── toolbox.sh          
+├── modules/            
+│   ├── prompt.sh       
+│   ├── git.sh          
+│   ├── aliases.sh      
+│   └── utils.sh        
+├── config.env          
+└── README.md    
+```
 
-# Commands
+## Installation
 
+Clone and install with one command:
+
+```bash
+git clone <your-repo-url> ~/.shell_toolbox
+bash ~/.shell_toolbox/install.sh
+source ~/.bashrc
+```
 
