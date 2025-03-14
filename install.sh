@@ -1,14 +1,28 @@
 #!/usr/bin/env bash
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONFIG_FILE="${SCRIPT_DIR}/config.env"
+CONFIG="${SCRIPT_DIR}/config.env"
 
-cat > "$CONFIG_FILE" << EOF
-ENABLE_PROMPT=false
-ENABLE_OHMYPOSH=false
-EOF
+source "${CONFIG}"
 
-grep -qxF "source ${SCRIPT_DIR}/toolbox.sh" ~/.bashrc || \
-  echo "source ${SCRIPT_DIR}/toolbox.sh" >> ~/.bashrc
+[ "$ENABLE_PROMPT" = true ] && source "${SCRIPT_DIR}/modules/prompt.sh"
+[ "$ENABLE_OHMYPOSH" = true ] && source "${SCRIPT_DIR}/modules/ohmyposh.sh"
+[ "$ENABLE_ALIASES" = true ] && source "${SCRIPT_DIR}/modules/aliases.sh"
 
-echo "Installation complete."
+function tb_enable() {
+  case "$1" in
+    prompt)
+      sed -i 's/ENABLE_PROMPT=.*/ENABLE_PROMPT=true/' "$CONFIG"
+      sed -i 's/ENABLE_OHMYPOSH=.*/ENABLE_OHMYPOSH=false/' "$CONFIG"
+      ;;
+    ohmyposh)
+      sed -i 's/ENABLE_PROMPT=.*/ENABLE_PROMPT=false/' "$CONFIG"
+      sed -i 's/ENABLE_OHMYPOSH=.*/ENABLE_OHMYPOSH=true/' "$CONFIG"
+      ;;
+    *)
+      echo "Invalid option. Usage: tb_enable [prompt|ohmyposh]"
+      return 1
+      ;;
+  esac
+  source ~/.bashrc
+}
